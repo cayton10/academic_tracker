@@ -230,7 +230,7 @@ void searchCourse(courses course[])
     //begin for loop
     for (i = 0; i < courseArrayLength; i++)
     {
-       if(course[i].courseName == desig)) == 0) //If the value in course.courseName is equal to user 'desig'
+       if(course[i].courseName == desig) //If the value in course.courseName is equal to user 'desig'
                                                //Have to use strcmp function when comparing c-strings in array.
                                                //I tried to use the example in CH.8-2 and apply it here. 
         {
@@ -353,10 +353,7 @@ void saveTo(student entry, courses course[])
         cout << "Error opening file. Output failed." << endl;
     }
     //Output student name to file
-    outData << "Student: " << entry.studentName << endl;
-    //Format course information table
-    outData << endl << left << setw(10) << "Course" << left << setw(25) << "Title" 
-            << setw(7) << "Hours" << "Grade" << endl << endl;
+    //outData << entry.studentName << endl;
 
     //Begin for loop to read array of course structs into file
         for (int i = 0; i < courseArrayLength; i++)
@@ -365,28 +362,22 @@ void saveTo(student entry, courses course[])
             {                             
                 break;                    
             }
-            outData << left << setw(4) << course[i].courseName << left << setw(6) << course[i].courseNum;//Print info formatting
-            outData << left << setw(25) << course[i].courseTitle << left << setw(7) << course[i].courseHours << course[i].courseGrade << endl;
+            outData << course[i].courseName << endl << course[i].courseNum << endl;//Print info formatting
+            outData << course[i].courseTitle << endl << course[i].courseHours << endl << course[i].courseGrade << endl;
         }
-
     outData.close();//Close output file
-        
-
-
 }
 
 /************************************************ LOAD DATA FROM FILE *************************************************/
 void loadFrom(student& entry, courses course[])
 {
     ifstream inData; //Declare input filestream variable
-    string userFile; //User deined filename variable
+    string userFile; //User defined filename variable
     //User prompts and instructions
     cout << "Enter name of file you wish to load including extension (.txt) Ex: myGrades.txt"; 
     cout << endl << "Enter file name: " << endl;
 
-    cin.ignore(); //Hope that the istream buffer clears
     getline(cin, userFile);//Read whole line from user input above
-
     //Open input file
     inData.open(userFile.c_str());
     //Message to user if file does not open
@@ -394,7 +385,20 @@ void loadFrom(student& entry, courses course[])
     {
         cout << "Unable to open file. Check spelling or ensure valid file location." << endl;
     }
-    //Input fstream formatting
-    inData.ignore(50, '\n'); //Ignore 
-    
+
+
+
+
+    for (int i = 0; i < courseArrayLength; i++)//For loop to iterate through and populate course struct array
+    {
+        inData >> course[i].courseName;
+        inData >> course[i].courseNum; 
+        inData.ignore();//Skips blank space after courseNum
+        getline(inData, course[i].courseTitle);//Get full line from course title
+        inData >> course[i].courseHours;
+        inData >> course[i].courseGrade;
+    }
+
+    inData.close();//Close file after reading into course array
+
 }
