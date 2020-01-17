@@ -98,7 +98,7 @@ int main ()
             break;
             case 4:
             {
-                //searchGrade(courseList);
+                searchGrade(courseList);
             }
             break;
             case 5:
@@ -217,45 +217,79 @@ void searchCourse(courses course[])
 {
     string desig;//User inputs course alpha designator to compare within loop
     //Assigned array value of 4 since strcmp requires 'desig' to have a size for comparison to course[i]
-    int i;//Location / loop counter
     bool found = false;
-    int coursesFound = 0; //Course output counter
 
     cout << endl << "Enter course Alpha-Designator (Ex: CIT, DFIA, etc.): " << endl;//User prompt
-    cin >> desig;//STUB TESTING
-    cout << endl;
+    cin >> desig;
+    cout << endl;//Terminal formatting
     cout << left << setw(10) << "Course" << left << setw(25) << "Title" << setw(7) << "Hours" << "Grade" << endl << endl;
-
+    //Format info header
     //begin for loop
-    for (i = 0; i < courseArrayLength; i++)
+    for (int i = 0; i < courseArrayLength; i++)//For loop to process array
     {
-        while (i < courseArrayLength)
+        while (i < courseArrayLength)//While array processes...
         {
             if(strcmp(course[i].courseName, desig.c_str()) == 0) //If the value in course.courseName is equal to user 'desig'
-                                               //Have to use strcmp function when comparing c-strings in array.
-                                               //I tried to use the example in CH.8-2 and apply it here. 
                 {
                     found = true;//Boolean 'found' is set to true
                     cout << left << setw(4) << course[i].courseName << left << setw(6) << course[i].courseNum;//Print info formatting
-                    cout << left << setw(25) << course[i].courseTitle << left << setw(7) << course[i].courseHours << course[i].courseGrade << endl;
-                    coursesFound += 1;
+                    cout << left << setw(25) << course[i].courseTitle << left << setw(7); 
+                    cout << course[i].courseHours << course[i].courseGrade << endl;
                     break;//Required since nested in while loop
                 }   
 
-            else if(i < courseArrayLength)
+            else if(i < courseArrayLength)//Continue array process.
                 {
                     i++;                   
                 }
-
-            if (i == courseArrayLength && coursesFound == 0)
-                {
-                    cout << "No courses by that designator." << endl;//Message to display if input 'desig' finds no matches.
-                    break;
-                }
-            
+        }
+        if(found == false)//If no courses found by user defined designator...
+        {
+            cout << "No courses by that designator." << endl;//Message to display if input 'desig' finds no matches.
+            break;
         }  
     }
     
+}
+/******************************************************* SEARCH BY GRADE *********************************************/
+//Prints course to user based on grade earned specified by user prompt
+void searchGrade(courses course[])
+{
+    string grade;//Variable stores user defined grade input
+    bool found = false;//Use boolean operator for logic 
+
+    cout << endl << "Enter grade of course you wish to search (Ex: A through F):" << endl
+                 << "Please use capital letter grades." << endl;
+    cin >> grade;//Read in user input
+    cout << endl;//Terminal formatting
+    cout << left << setw(10) << "Course" << left << setw(25) << "Title" << setw(7) << "Hours" << "Grade" << endl << endl;
+    //Info header formatting
+    for(int i = 0; i < courseArrayLength; i++)
+    {
+        while(i < courseArrayLength)
+        {
+            if(strcmp(course[i].courseGrade, grade.c_str()) == 0)
+            {
+                found = true;
+                cout << left << setw(4) << course[i].courseName << left << setw(6) << course[i].courseNum;//Print info formatting
+                cout << left << setw(25) << course[i].courseTitle << left << setw(7); 
+                cout << course[i].courseHours << course[i].courseGrade << endl;
+                break;//Required since nested in while loop
+
+            }
+            else if(i < courseArrayLength)//Continue array process.
+            {
+                i++;                   
+            }
+        }
+        if(found == false)
+        {
+            cout << "No courses with specified grade. Check records or user input." << endl;
+            break;
+        }
+    }
+
+
 }
 
 /******************************************************* SHOW ALL GRADES *********************************************/
