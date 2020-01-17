@@ -215,37 +215,45 @@ void addCourse(courses course[])
 //Prompts user to enter course alpha designator for comparison purposes. 
 void searchCourse(courses course[])
 {
-    char desig[3];//User inputs course alpha designator to compare within loop
+    string desig;//User inputs course alpha designator to compare within loop
     //Assigned array value of 4 since strcmp requires 'desig' to have a size for comparison to course[i]
     int i;//Location / loop counter
-    bool found = false; //Set to false prior to start of loop
+    bool found = false;
+    int coursesFound = 0; //Course output counter
 
     cout << endl << "Enter course Alpha-Designator (Ex: CIT, DFIA, etc.): " << endl;//User prompt
-    cin >> desig;
-    cin.ignore();//Clear istream buffer
-    //Set course info headings
+    cin >> desig;//STUB TESTING
     cout << endl;
     cout << left << setw(10) << "Course" << left << setw(25) << "Title" << setw(7) << "Hours" << "Grade" << endl << endl;
 
     //begin for loop
     for (i = 0; i < courseArrayLength; i++)
     {
-       if(course[i].courseName == desig) //If the value in course.courseName is equal to user 'desig'
+        while (i < courseArrayLength)
+        {
+            if(strcmp(course[i].courseName, desig.c_str()) == 0) //If the value in course.courseName is equal to user 'desig'
                                                //Have to use strcmp function when comparing c-strings in array.
                                                //I tried to use the example in CH.8-2 and apply it here. 
-        {
-            found = true;//This value has been found within the array.
-        }   
+                {
+                    found = true;//Boolean 'found' is set to true
+                    cout << left << setw(4) << course[i].courseName << left << setw(6) << course[i].courseNum;//Print info formatting
+                    cout << left << setw(25) << course[i].courseTitle << left << setw(7) << course[i].courseHours << course[i].courseGrade << endl;
+                    coursesFound += 1;
+                    break;//Required since nested in while loop
+                }   
 
-        if ((found = true))//If match is found, print all course information into formatted table for user 
-        {
-            cout << left << setw(4) << course[i].courseName << left << setw(6) << course[i].courseNum;//Print info formatting
-            cout << left << setw(25) << course[i].courseTitle << left << setw(7) << course[i].courseHours << course[i].courseGrade << endl;
-        }
-        else//If found remains false through entire array, prints message
-        {
-            cout << "No courses by that designator.";//Message to display if input 'desig' finds no matches.
-        }
+            else if(i < courseArrayLength)
+                {
+                    i++;                   
+                }
+
+            if (i == courseArrayLength && coursesFound == 0)
+                {
+                    cout << "No courses by that designator." << endl;//Message to display if input 'desig' finds no matches.
+                    break;
+                }
+            
+        }  
     }
     
 }
