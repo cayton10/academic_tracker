@@ -19,3 +19,12 @@ I.E.:
     * Limit course alpha to 4 char
     * No letters allowed in course number
     * I'm sure I can find something else to keep busy. 
+    * Case insensitivity
+
+##### 5.21.2020
+
+Fixed case insensitive qualifying input for mutliple functions.
+Functions updated:
+    * Add Courses
+    * Search By Alpha
+    * Search By Grade

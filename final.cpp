@@ -149,21 +149,21 @@ void menu(int& userChoice)
 
 
     //User input and input validation do..(if)..while loop.
-        do
+       do
         {
             //Read user input
             cin >> userChoice;
-            //Clear input stream for next user input
-            cin.ignore(100, '\n');
+            
+            
                 //IF statement qualifies user input
                 while (cin.fail() || (userChoice < 1 || userChoice > 9))
                 {
                     cout << "Following instruction is integral to academic success." << endl 
                     << "Enter an appropriate option from 1 to 9." << endl;
                     cin.clear();
+                    cin.ignore(100, '\n');
                     cin >> userChoice;
                     //Clear input stream for next user input
-                    cin.ignore(100, '\n');
                 }
         //While loop forces user to enter valid input
         }while(userChoice < 1 || userChoice > 9);
@@ -176,6 +176,8 @@ void menu(int& userChoice)
 void enterName(student& entry)
 {
     cout << "Enter student full name." << endl; //User prompt
+    //Clear input stream
+    cin.ignore(100, '\n');
     cin.getline(entry.studentName, nameLength); //Read up to 30 characters of user imput(Include white space)
     cout << endl;
 }
@@ -248,9 +250,6 @@ void searchCourse(courses course[])
             desig.at(i) = toupper(desig.at(i));
         }
 
-        desig = desig;
-        //Reassign char array with capitalized string
-        cout << desig;
 
     cout << endl;//Terminal formatting
     cout << left << setw(10) << "Course" << left << setw(25) << "Title" << setw(7) << "Hours" << "Grade" << endl << endl;
@@ -291,6 +290,12 @@ void searchGrade(courses course[])
     cout << endl << "Enter grade of course you wish to search (Ex: A through F):" << endl
                  << "Please use capital letter grades." << endl;
     cin >> grade;//Read in user input
+        //Qualify user input for 'toupper' 
+        for(int i = 0; i < grade.length(); ++i)
+        {
+            grade.at(i) = toupper(grade.at(i));
+        }
+
     cout << endl;//Terminal formatting
     cout << left << setw(10) << "Course" << left << setw(25) << "Title" << setw(7) << "Hours" << "Grade" << endl << endl;
     //Info header formatting
@@ -405,15 +410,19 @@ void showGPA(courses course[])
 /************************************************ SAVE DATA TO FILE ***************************************************/
 void saveTo(student entry, courses course[])
 {
-    ofstream outData; // Declare output filestream variable
+    
     string userFile; //User defined filename variable
+    ofstream outData; // Declare output filestream variable
+
     //User prompts and instructions
     cout << "Enter name of file you wish to save with extension (.txt) Ex: myGrades.txt" << endl;
     cout << "Do not use spaces or special characters. Underscores (_) are permitted." << endl;
     cout << "Enter file name: ";
-
+    //Clear input stream
+    cin.ignore(100, '\n');
     //User input
     getline(cin, userFile);//Read whole line from user
+    cout << userFile;
 
     //Open output file
     outData.open(userFile.c_str());
