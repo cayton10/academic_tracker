@@ -32,7 +32,7 @@ struct courses //Course struct
 {
     char courseName[3];
     string courseTitle;
-    char courseNum[2];//VERY STRANGE... IF I LISTED courseNum UNDER courseName, then these were concat during printing
+    char courseNum[2];
     int courseHours;
     char courseGrade[1];
     
@@ -68,7 +68,7 @@ int main ()
     int choiceNum;
 
 
-    cout << "Welcome to the SUPER senior database." << endl << "Not everyone is cut out to get two undergrad" 
+    cout << endl << "Welcome to the SUPER senior database." << endl << "Not everyone is cut out to get two undergrad" 
             " science degrees, so I've made this application " << endl << "for us to keep track of our collective "
             "punishment." << endl << endl;
 
@@ -153,14 +153,19 @@ void menu(int& userChoice)
         {
             //Read user input
             cin >> userChoice;
-            cin.ignore(); //Clear input buffer
                 //IF statement qualifies user input
-                if (userChoice < 1 || userChoice > 9)
+                while (cin.fail() || (userChoice < 1 || userChoice > 9))
                 {
-                    cout << "Following instruction is integral to your academic success." << endl << "Try again." << endl;
+                    cout << "Following instruction is integral to academic success." << endl 
+                    << "Enter an appropriate option from 1 to 9." << endl;
+                    cin.clear();
+                    cin.ignore(100, '\n');
+                    cin >> userChoice;
+                    //Clear input stream for next user input
+                    cin.ignore(100, '\n');
                 }
-        //While loops reads user input and selects appropriate option in main
-        } while (userChoice < 1 || userChoice > 9);
+        //While loop forces user to enter valid input
+        }while(userChoice < 1 || userChoice > 9);
         
         
 }
@@ -248,8 +253,7 @@ void searchCourse(courses course[])
             cout << "No courses by that designator." << endl;//Message to display if input 'desig' finds no matches.
             break;
         }  
-    }
-    
+    } 
 }
 /******************************************************* SEARCH BY GRADE *********************************************/
 //Prints course to user based on grade earned specified by user prompt
@@ -264,11 +268,11 @@ void searchGrade(courses course[])
     cout << endl;//Terminal formatting
     cout << left << setw(10) << "Course" << left << setw(25) << "Title" << setw(7) << "Hours" << "Grade" << endl << endl;
     //Info header formatting
-    for(int i = 0; i < courseArrayLength; i++)
+    for(int i = 0; i < courseArrayLength; i++)//For loop to process array
     {
-        while(i < courseArrayLength)
+        while(i < courseArrayLength)//While iterating through array
         {
-            if(strcmp(course[i].courseGrade, grade.c_str()) == 0)
+            if(strcmp(course[i].courseGrade, grade.c_str()) == 0)//Compare user input to recorded grades
             {
                 found = true;
                 cout << left << setw(4) << course[i].courseName << left << setw(6) << course[i].courseNum;//Print info formatting
@@ -282,14 +286,12 @@ void searchGrade(courses course[])
                 i++;                   
             }
         }
-        if(found == false)
+        if(found == false)//If no match found...
         {
-            cout << "No courses with specified grade. Check records or user input." << endl;
+            cout << "No courses with specified grade. Check records or user input." << endl;//Message to user if no match is found
             break;
         }
     }
-
-
 }
 
 /******************************************************* SHOW ALL GRADES *********************************************/
