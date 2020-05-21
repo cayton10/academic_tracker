@@ -191,22 +191,22 @@ void addCourse(courses course[])
         {
             cout << "Enter course alpha designator (Ex: CIT, DFIA, etc): ";//Enter course designator
             cin >> course[i].courseName;//User input
-            string alpha = course[i].courseName;
-            //Initialize length of course char array
-            int courseLength = 0;
-            //Assign length of courseName char array 
-            courseLength = sizeof(course[i].courseName);
-            //use 'for' loop to iterate through char array for course alpha.
-            for(int i=0; i < courseLength; ++i)
-            {
-                //Assign string w/ appropriate uppercase letters
-                alpha.at(i) = toupper(alpha.at(i));
-                cout << alpha;
-            }
+                //Assign value of user input to string for processing
+                string alpha = course[i].courseName;
+                //Initialize length of course char array
+                int courseLength = 0;
+                //Assign length of courseName char array 
+                courseLength = sizeof(course[i].courseName);
+                //use 'for' loop to iterate through char array for course alpha.
+                for(int i=0; i < courseLength; ++i)
+                {
+                    //Assign string w/ appropriate uppercase letters
+                    alpha.at(i) = toupper(alpha.at(i));
+                }
+                //Reassign char array with capitalized string
+                //Have to use strcpy function to copy strings into char array
+                strcpy(course[i].courseName, alpha.c_str());
 
-            //Reassign char array with capitalized string
-            strcpy(course[i].courseName, alpha.c_str());
-            cout << course[i].courseName;
 
             cin.ignore();//Clear istream buffer
 
@@ -240,6 +240,18 @@ void searchCourse(courses course[])
 
     cout << endl << "Enter course Alpha-Designator (Ex: CIT, DFIA, etc.): " << endl;//User prompt
     cin >> desig;
+
+        //use 'for' loop to iterate through char array for course alpha.
+        for(int i=0; i < desig.length(); ++i)
+        {
+            //Assign string w/ appropriate uppercase letters
+            desig.at(i) = toupper(desig.at(i));
+        }
+
+        desig = desig;
+        //Reassign char array with capitalized string
+        cout << desig;
+
     cout << endl;//Terminal formatting
     cout << left << setw(10) << "Course" << left << setw(25) << "Title" << setw(7) << "Hours" << "Grade" << endl << endl;
     //Format info header
