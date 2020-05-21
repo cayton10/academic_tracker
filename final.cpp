@@ -153,13 +153,14 @@ void menu(int& userChoice)
         {
             //Read user input
             cin >> userChoice;
+            //Clear input stream for next user input
+            cin.ignore(100, '\n');
                 //IF statement qualifies user input
                 while (cin.fail() || (userChoice < 1 || userChoice > 9))
                 {
                     cout << "Following instruction is integral to academic success." << endl 
                     << "Enter an appropriate option from 1 to 9." << endl;
                     cin.clear();
-                    cin.ignore(100, '\n');
                     cin >> userChoice;
                     //Clear input stream for next user input
                     cin.ignore(100, '\n');
@@ -171,8 +172,7 @@ void menu(int& userChoice)
 }
 
 /*************************************************** ENTER NAME ***************************************************/
-//Prompts user to enter full name. Is SUPPOSED to read in entire line of characters. Don't know why this partially
-//works.
+//Prompts user to enter full name.
 void enterName(student& entry)
 {
     cout << "Enter student full name." << endl; //User prompt
@@ -181,34 +181,48 @@ void enterName(student& entry)
 }
 
 /*************************************************** ADD COURSE(S) ***************************************************/
-//Prompts user to enter couse information in a particular order for storage. Once one course is completely populated
-//function prompts user to continue or exit.
+//Prompts user to enter couse information in a particular order for storage. 
 void addCourse(courses course[])
 {
-    int num = 1; //Used for continue prompt
     //for loop to populate course array struct
-    for (int i = 0; i < courseArrayLength; i++)//Classic array populating for loop
+    for (int i = 0; i < courseArrayLength; i++)//Array access for loop
     {
         if (course[i].courseHours == 0) //If char array is empty, prompt to enter course info 
         {
-            cout << "Enter course alpha designator (Ex: CIT): ";//Enter course designator
-            cin >> course[i].courseName;//User input 
+            cout << "Enter course alpha designator (Ex: CIT, DFIA, etc): ";//Enter course designator
+            cin >> course[i].courseName;//User input
+            string alpha = course[i].courseName;
+            //Initialize length of course char array
+            int courseLength = 0;
+            //Assign length of courseName char array 
+            courseLength = sizeof(course[i].courseName);
+            //use 'for' loop to iterate through char array for course alpha.
+            for(int i=0; i < courseLength; ++i)
+            {
+                //Assign string w/ appropriate uppercase letters
+                alpha.at(i) = toupper(alpha.at(i));
+                cout << alpha;
+            }
+
+            //Reassign char array with capitalized string
+            strcpy(course[i].courseName, alpha.c_str());
+            cout << course[i].courseName;
+
             cin.ignore();//Clear istream buffer
 
             cout << endl << "Enter course number: ";//Enter course number
             cin >> course[i].courseNum;//User Input
 
-
             cout << endl << "Enter course title: ";
             cin.ignore();//Clear istream buffer  
-            getline(cin,course[i].courseTitle);//Read full line
+            getline(cin, course[i].courseTitle);//Read full line
 
             cout << endl << "Enter course hours: ";
             cin >> course[i].courseHours;
 
             cout << endl << "Enter course grade: ";
             cin >> course[i].courseGrade;
-
+        //Break loop after course entry. Return to menu
             break;
         }
         
