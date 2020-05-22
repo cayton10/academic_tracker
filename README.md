@@ -17,14 +17,27 @@ Which I uncovered during my time learning data structures. So when unqualified i
 Something I need to update is qualification on user entry. 
 I.E.:
     * Limit course alpha to 4 char
-    * No letters allowed in course number
+    * ~No letters allowed in course number~
     * I'm sure I can find something else to keep busy. 
-    * Case insensitivity
+    * ~Case insensitivity~
 
 ##### 5.21.2020
 
 Fixed case insensitive qualifying input for mutliple functions.
 Functions updated:
-    * Add Courses
-    * Search By Alpha
-    * Search By Grade
+    * Add Courses (alpha designation)
+    * Search By Alpha (alpha designation (obviously))
+    * Search By Grade (Letter grade)
+
+
+#### 5.22.2020
+
+Updated writing location for ofstream. Navigates to "Grades" directory and writes file of user's choosing. Added: 
+```C++
+//Prepend string with directory
+    userFile.insert(0, "Grades/");
+```
+to prepend user input filename with the directory I created to store files. Also added this functionality to the 'load file' function. 
+
+
+Qualified user input for courseNum of course struct member. Pulled a check_number function from the interwebs and incorporated into the Add Course function. If a user enters any characters other than numbers, the program sarcastically calls the user a genius and prompts to re-enter the course number. 

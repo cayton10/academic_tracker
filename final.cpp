@@ -55,6 +55,16 @@ void showGPA(courses course[]); //Calculate GPA - Quality Points(QP) / Qualit Ho
 void saveTo(student entry, courses[]); //Save entered information into file
 void loadFrom(student& entry, courses[]); //Load from file
 
+//DECLARE FUNCTION FOR CHECKING NUMBERS
+//check if number or string
+bool check_number(string str) 
+{
+   for (int i = 0; i < str.length(); i++)
+   if (isdigit(str[i]) == false)
+      return false;
+      return true;
+}
+
 /****************************************************************************************************************/
 /************************************************* MAIN FUNCTION ************************************************/
 /****************************************************************************************************************/
@@ -211,9 +221,26 @@ void addCourse(courses course[])
 
 
             cin.ignore();//Clear istream buffer
-
-            cout << endl << "Enter course number: ";//Enter course number
-            cin >> course[i].courseNum;//User Input
+            //Define 'answer' string for while loop
+            string answer;
+            //Do while loop to qualify user input for courseNum
+            do
+            {
+                
+                cout << endl << "Enter course number: ";//Enter course number
+                cin >> course[i].courseNum;//User Input
+                if(check_number(course[i].courseNum))
+                {
+                    answer = "yes";
+                }
+                else
+                {
+                    answer = "no";
+                    cout << "Pretty sure there are no letters in a course NUMBER, genius." << endl;
+                }
+                
+            } while (answer == "no");
+            
 
             cout << endl << "Enter course title: ";
             cin.ignore();//Clear istream buffer  
@@ -410,20 +437,22 @@ void showGPA(courses course[])
 /************************************************ SAVE DATA TO FILE ***************************************************/
 void saveTo(student entry, courses course[])
 {
-    
     string userFile; //User defined filename variable
     ofstream outData; // Declare output filestream variable
 
     //User prompts and instructions
-    cout << "Enter name of file you wish to save with extension (.txt) Ex: myGrades.txt" << endl;
-    cout << "Do not use spaces or special characters. Underscores (_) are permitted." << endl;
+    cout << "Enter name of file you wish to save." << endl;
+    cout << "Do not use spaces or special characters. Underscores (_) are permitted." << endl << endl;
     cout << "Enter file name: ";
     //Clear input stream
     cin.ignore(100, '\n');
     //User input
     getline(cin, userFile);//Read whole line from user
-    cout << userFile;
+    //Prepend string with directory
+    userFile.insert(0, "Grades/");
 
+    //Add file extension
+    userFile += ".txt";
     //Open output file
     outData.open(userFile.c_str());
     //Message to user if file does not open
@@ -453,10 +482,17 @@ void loadFrom(student& entry, courses course[])
     ifstream inData; //Declare input filestream variable
     string userFile; //User defined filename variable
     //User prompts and instructions
-    cout << "Enter name of file you wish to load including extension (.txt) Ex: myGrades.txt"; 
-    cout << endl << "Enter file name: " << endl;
+    cout << "Enter name of file you wish to load Ex: myGrades"; 
+    cout << endl << endl << "Enter file name: " << endl;
+    //Clear input stream
+    cin.ignore(100, '\n');
 
     getline(cin, userFile);//Read whole line from user input above
+    //Prepend string with directory
+    userFile.insert(0, "Grades/");
+    //Add file extension
+    userFile += ".txt";
+
     //Open input file
     inData.open(userFile.c_str());
     //Message to user if file does not open
@@ -464,8 +500,6 @@ void loadFrom(student& entry, courses course[])
     {
         cout << "Unable to open file. Check spelling or ensure valid file location." << endl;
     }
-
-
 
 
     for (int i = 0; i < courseArrayLength; i++)//For loop to iterate through and populate course struct array
