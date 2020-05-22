@@ -22,6 +22,7 @@ I.E.:
     <li>* I'm sure I can find something else to keep busy.</li>
     <li>* ~Case insensitivity~</li>
 </ul>
+
 ##### 5.21.2020
 
 Fixed case insensitive qualifying input for mutliple functions.
