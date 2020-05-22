@@ -16,18 +16,21 @@ Which I uncovered during my time learning data structures. So when unqualified i
 
 Something I need to update is qualification on user entry. 
 I.E.:
-    * Limit course alpha to 4 char
-    * ~No letters allowed in course number~
-    * I'm sure I can find something else to keep busy. 
-    * ~Case insensitivity~
-
+<ul>
+    <li>* Limit course alpha to 4 char</li>
+    <li>* ~No letters allowed in course number~</li>
+    <li>* I'm sure I can find something else to keep busy.</li>
+    <li>* ~Case insensitivity~</li>
+</ul>
 ##### 5.21.2020
 
 Fixed case insensitive qualifying input for mutliple functions.
 Functions updated:
-    * Add Courses (alpha designation)
-    * Search By Alpha (alpha designation (obviously))
-    * Search By Grade (Letter grade)
+<ul>
+    <li>* Add Courses (alpha designation)</li>
+    <li>* Search By Alpha (alpha designation (obviously))</li>
+    <li>* Search By Grade (Letter grade)</li>
+</ul>
 
 
 #### 5.22.2020
